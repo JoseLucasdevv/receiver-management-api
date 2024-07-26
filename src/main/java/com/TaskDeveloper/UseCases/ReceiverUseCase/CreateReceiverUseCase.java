@@ -15,6 +15,7 @@ import com.TaskDeveloper.Mappers.ReceiverMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class CreateReceiverUseCase extends RuntimeException {
@@ -24,6 +25,8 @@ public class CreateReceiverUseCase extends RuntimeException {
     private ValidationKeyTypePix _validationTypePix;
 
     public String createReceiverList(List<ReceiverDTO> receiverDto) {
+            this._validationTypePix.handlereceiverDTOList(receiverDto);
+
             this._receiverRepository.saveAll(new ReceiverMapper().listDtoToEntity(receiverDto));
             return "save";
         }
@@ -31,9 +34,9 @@ public class CreateReceiverUseCase extends RuntimeException {
 
     public String createReceiver(ReceiverDTO receiverDto) {
 
-        this._validationTypePix.handlereceiverDTO(receiverDto);
+    this._validationTypePix.handlereceiverDTO(receiverDto);
 
-        this._receiverRepository.save(new ReceiverMapper().dtoToEntity(receiverDto));
+    this._receiverRepository.save(new ReceiverMapper().dtoToEntity(receiverDto));
 
         return "save";
     }
