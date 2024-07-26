@@ -23,15 +23,24 @@ public class ReceiverController {
     DeleteReceiverUseCase _deleteReceiverUseCase;
     @PostMapping("list")
     public ResponseEntity<String> createReceiverList(@Valid @RequestBody List<ReceiverDTO> receiverdto){
-     return new ResponseEntity<>(_createReceiverUseCase.createReceiverList(receiverdto),HttpStatus.CREATED);
+        try{
+            return new ResponseEntity<>(_createReceiverUseCase.createReceiverList(receiverdto),HttpStatus.CREATED);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+        }
     }
     @PostMapping()
     public ResponseEntity<String> createReceiver(@Valid @RequestBody ReceiverDTO receiverdto){
+        try{
         return new ResponseEntity<>(_createReceiverUseCase.createReceiver(receiverdto),HttpStatus.CREATED);
+        }catch(Exception e ){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+        }
     }
     @GetMapping("{pageNumber}")
     @ResponseBody
     public ResponseEntity<List<Receiver>> getAllResources(@PathVariable int pageNumber){
+
      return new ResponseEntity<>(this._getReceiverUseCase.resourceAllReceiver(pageNumber), HttpStatus.OK);
     }
     @PutMapping("{id}")
