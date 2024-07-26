@@ -5,7 +5,9 @@ import com.TaskDeveloper.TypesPix.TypesPix;
 import org.springframework.stereotype.Component;
 import com.TaskDeveloper.exceptions.Exception;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -14,13 +16,12 @@ import java.util.regex.Matcher;
 @Component
 public class ValidationKeyTypePix {
 
+    private Set<String> processDuplicateKey = new HashSet<>();
 
     public void handlereceiverDTO(ReceiverDTO receiverdto){
-
         receiverdto.pix().forEach(receiverPix -> {
-
+                this.checkForDuplicateKey(receiverPix.getKey_pix());
                 this.validationKey(receiverPix.getKey_type(), receiverPix.getKey_pix());
-
         });
 
     }
@@ -28,11 +29,21 @@ public class ValidationKeyTypePix {
 
         receiverdto.forEach(receivers->{
             receivers.pix().forEach(receiverPix ->{
+                this.checkForDuplicateKey(receiverPix.getKey_pix());
                 this.validationKey(receiverPix.getKey_type(), receiverPix.getKey_pix());
             });
         });
 
     }
+    private void checkForDuplicateKey(String keyValue) {
+        if (processDuplicateKey.contains(keyValue)) {
+            throw new Exception("Duplicate Key: " + keyValue);
+        } else {
+            processDuplicateKey.add(keyValue);
+        }
+    }
+
+
 
     private Boolean validationKey(TypesPix keyType,String keyValue)  {
 
