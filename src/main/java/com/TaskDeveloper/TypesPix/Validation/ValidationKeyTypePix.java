@@ -3,10 +3,12 @@ package com.TaskDeveloper.TypesPix.Validation;
 import com.TaskDeveloper.Dtos.ReceiverDTO;
 import com.TaskDeveloper.TypesPix.TypesPix;
 import org.springframework.stereotype.Component;
+import com.TaskDeveloper.exceptions.Exception;
 
-
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
 
 
 @Component
@@ -15,19 +17,32 @@ public class ValidationKeyTypePix {
 
     public void handlereceiverDTO(ReceiverDTO receiverdto){
 
-
         receiverdto.pix().forEach(receiverPix -> {
-             this.ValidationKey(receiverPix.getKey_type(), receiverPix.getKey_pix());
+
+                this.validationKey(receiverPix.getKey_type(), receiverPix.getKey_pix());
+
+        });
+
+    }
+    public void handlereceiverDTOList(List<ReceiverDTO> receiverdto){
+
+        receiverdto.forEach(receivers->{
+            receivers.pix().forEach(receiverPix ->{
+                this.validationKey(receiverPix.getKey_type(), receiverPix.getKey_pix());
+            });
         });
 
     }
 
-private Boolean ValidationKey(TypesPix keyType,String keyValue)  {
+    private Boolean validationKey(TypesPix keyType,String keyValue)  {
 
     switch(keyType){
         case CPF:
             Boolean matcherCPF = matcherPattern("^[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}$", keyValue);
             System.out.println(matcherCPF);
+
+            this.checkMatcher(matcherCPF);
+
             return matcherCPF;
 
         case CNPJ:
@@ -51,15 +66,23 @@ private Boolean ValidationKey(TypesPix keyType,String keyValue)  {
             return matcherEmail;
 
         default:
-            return false;
+            throw new Exception("Unknown KeyType: " + keyType);
 
         }
     }
 
-    private boolean matcherPattern(String patternKey , String keyValue){
+    private boolean matcherPattern(String patternKey, String keyValue){
         Pattern pattern = Pattern.compile(patternKey);
         Matcher matcher = pattern.matcher(keyValue);
         return matcher.matches();
     }
+
+    private Boolean checkMatcher(Boolean matcherCPF){
+
+        if(!matcherCPF){
+            throw new Exception("Invalid KeyType");
+        }
+        return true;
+    };
 
 }
