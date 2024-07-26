@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 @Transactional
 @Entity
@@ -17,6 +18,7 @@ public class Pix {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pixId;
 
+    @Length(max = 140, message = "Max length 140 characters")
     @NotNull(message = "key pix cannot be nullish")
     @Column
     private String key_pix;
