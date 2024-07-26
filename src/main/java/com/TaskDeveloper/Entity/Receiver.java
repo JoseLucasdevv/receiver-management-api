@@ -2,7 +2,12 @@ package com.TaskDeveloper.Entity;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GeneratorType;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -15,13 +20,19 @@ public class Receiver {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "receiver_id")
     private Long receiverId;
-
+    @Length(min = 3)
+    @NotEmpty(message = "Cannot be empty")
+    @NotNull(message = "Cannot be nullish")
     @Column
     private String name;
-
+    @CPF(message = "should be cpf")
+    @NotEmpty(message = "Cannot be empty")
+    @NotNull(message = "Cannot be nullish")
     @Column
     private String cpf;
-
+    @Email(message = "should be Email")
+    @NotEmpty(message = "Cannot be empty")
+    @NotNull(message = "Cannot be nullish")
     @Column
     private String email;
 
