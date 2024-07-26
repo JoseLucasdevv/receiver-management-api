@@ -21,7 +21,6 @@ public class ReceiverMapper {
         return receiver;
     }
     public List<Receiver> listDtoToEntity(List<ReceiverDTO> receiverdto) {
-        List<Receiver> receivers = new ArrayList<>();
 
         return receiverdto.stream().map(dto -> {
             Receiver receiver = new Receiver();
@@ -31,7 +30,6 @@ public class ReceiverMapper {
             receiver.setPix(dto.pix());
             return receiver;
         }).collect(Collectors.toList());
-
 
 
     }
