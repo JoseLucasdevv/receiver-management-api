@@ -57,34 +57,32 @@ public class ValidationKeyTypePix {
     switch(keyType){
         case CPF:
             Boolean matcherCPF = matcherPattern("^[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}$", keyValue);
-            System.out.println(matcherCPF);
             this.checkMatcher(matcherCPF);
 
             return;
 
         case CNPJ:
             Boolean matcherCNPJ = matcherPattern("^[0-9]{2}\\.?[0-9]{3}\\.?[0-9]{3}\\/?[0-9]{4}-?[0-9]{2}$", keyValue);
-            System.out.println(matcherCNPJ);
+            this.checkMatcher(matcherCNPJ);
             return;
 
         case RANDOM_KEY:
             Boolean matcherRandomKey = matcherPattern("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", keyValue);
-            System.out.println(matcherRandomKey);
+            this.checkMatcher(matcherRandomKey);
             return;
 
         case PHONE:
             Boolean matcherPhone = matcherPattern("^((?:\\+?55)?)([1-9][0-9])(9[0-9]{8})$", keyValue);
-            System.out.println(matcherPhone);
+            this.checkMatcher(matcherPhone);
             return;
 
         case EMAIL:
             Boolean matcherEmail = matcherPattern("^[a-z0-9+_.-]+@[a-z0-9.-]+$", keyValue);
-            System.out.println(matcherEmail);
+            this.checkMatcher(matcherEmail);
             return;
 
         default:
             throw new Exception("Unknown KeyType: " + keyType);
-
         }
     }
 
