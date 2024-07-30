@@ -26,14 +26,10 @@ public class DeleteReceiverUseCase {
 
         }
 
-    public String deleteReceivers(List<ReceiverDTO> receiverDto) {
-
-        List<Long> listId;
-
-        listId = receiverDto.stream().map(ReceiverDTO::receiver_id).collect(Collectors.toList());
+    public String deleteReceivers(List<Long> listId) {
 
 
-      this._receiverRepository.deleteAllById(listId);
+        this._receiverRepository.deleteAllById(listId);
 
         return "Success to Delete users";
 
