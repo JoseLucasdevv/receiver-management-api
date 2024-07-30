@@ -50,10 +50,16 @@ public class ReceiverController {
     }
     @DeleteMapping("{id}")
     @ResponseBody
-    public ResponseEntity<String> updateReceiver(@PathVariable long id){
+    public ResponseEntity<String> deleteReceiver(@PathVariable long id){
         return new ResponseEntity<>(this._deleteReceiverUseCase.deleteReceiver(id),HttpStatus.OK);
     }
 
+
+    @DeleteMapping("list")
+    @ResponseBody
+    public ResponseEntity<String> deleteReceivers(@RequestBody List<Long> id){
+        return new ResponseEntity<>(this._deleteReceiverUseCase.deleteReceivers(id),HttpStatus.OK);
+    }
 
 }
     
