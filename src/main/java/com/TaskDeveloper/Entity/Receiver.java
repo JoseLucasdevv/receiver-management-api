@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
+import com.TaskDeveloper.TypesStatus.TypeStatus;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class Receiver {
     @CPF(message = "should be cpf")
     @NotEmpty(message = "Cannot be empty")
     @NotNull(message = "Cannot be nullish")
+
     @Column
     private String cpf;
     @Email(message = "should be Email")
@@ -34,11 +37,16 @@ public class Receiver {
     @Column
     private String email;
 
+    @NotNull(message = "Cannot be nullish")
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TypeStatus status = TypeStatus.SKETCH;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name ="fk_receiver_id",referencedColumnName = "receiver_id")
     private List<Pix> pix;
 
-    public Receiver(String name, Long receiverId, String cpf, String email, List<Pix> pix) {
+    public Receiver(String name, Long receiverId, String cpf, String email, List<Pix> pix,TypeStatus status) {
         this.name = name;
         this.receiverId = receiverId;
         this.cpf = cpf;
@@ -78,9 +86,7 @@ public class Receiver {
         this.cpf = cpf;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
+    public String getCpf() {return cpf;}
 
     public void setEmail(String email) {
         this.email = email;
@@ -89,5 +95,12 @@ public class Receiver {
     public String getEmail() {
         return email;
     }
+
+    public void setStatus(TypeStatus status) {
+        this.status = status;
+    }
+
+    public TypeStatus getStatus() {return this.status;}
+
 
 }
