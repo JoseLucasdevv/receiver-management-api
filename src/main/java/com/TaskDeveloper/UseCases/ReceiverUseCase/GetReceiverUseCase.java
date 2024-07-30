@@ -19,7 +19,7 @@ public class GetReceiverUseCase {
     private ReceiverRepository _receiverRepository;
 
     public GetReceiverUseCase(ReceiverRepository receiverRepository) {
-        _receiverRepository = receiverRepository;
+        this._receiverRepository = receiverRepository;
     }
 
 
