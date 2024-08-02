@@ -2,7 +2,9 @@ package com.TaskDeveloper.UseCases.ReceiverUseCase;
 
 import com.TaskDeveloper.Entity.Receiver;
 import com.TaskDeveloper.Repository.ReceiverRepository;
+import com.TaskDeveloper.TypesPix.TypesPix;
 import com.TaskDeveloper.TypesStatus.TypeStatus;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +32,7 @@ public class GetReceiverUseCase {
         return receivers;
 
     }
+
     public List<Receiver> getAllReceiverByName(String name,int pageNumber) {
         Pageable page = PageRequest.of(pageNumber,10);
 
@@ -40,6 +43,7 @@ public class GetReceiverUseCase {
         return receivers;
 
     }
+
     public List<Receiver> getAllReceiverByStatus( int pageNumber,TypeStatus status) {
         Pageable page = PageRequest.of(pageNumber,10);
 
@@ -48,8 +52,28 @@ public class GetReceiverUseCase {
 
         List<Receiver> receivers = listPageable.stream().collect(Collectors.toList());
         return receivers;
+    }
+
+    public List<Receiver> getAllReceiverByKeyType(int pageNumber, TypesPix typesPix) {
+
+        Pageable page = PageRequest.of(pageNumber,10);
+
+        Page<Receiver> listPageable =
+                this._receiverRepository.findAllByTypeKey(typesPix,page);
+
+        List<Receiver> receivers = listPageable.stream().collect(Collectors.toList());
+        return receivers;
+    }
+
+
+    public Receiver getReceiverByKeyValue(String keyValue) {
+
+        Receiver receiver = this._receiverRepository.findByKeyValue(keyValue);
+
+        return receiver;
 
     }
+
 
 
 }
