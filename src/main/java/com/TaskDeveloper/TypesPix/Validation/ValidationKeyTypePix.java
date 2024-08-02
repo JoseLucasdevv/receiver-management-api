@@ -2,6 +2,7 @@ package com.TaskDeveloper.TypesPix.Validation;
 
 import com.TaskDeveloper.Dtos.ReceiverDTO;
 import com.TaskDeveloper.TypesPix.TypesPix;
+
 import org.springframework.stereotype.Component;
 import com.TaskDeveloper.exceptions.Exception;
 
@@ -56,29 +57,34 @@ public class ValidationKeyTypePix {
 
     switch(keyType){
         case CPF:
+
             Boolean matcherCPF = matcherPattern("^[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}$", keyValue);
-            this.checkMatcher(matcherCPF);
+            this.checkMatcher(matcherCPF,keyType);
 
             return;
 
         case CNPJ:
+
             Boolean matcherCNPJ = matcherPattern("^[0-9]{2}\\.?[0-9]{3}\\.?[0-9]{3}\\/?[0-9]{4}-?[0-9]{2}$", keyValue);
-            this.checkMatcher(matcherCNPJ);
+            this.checkMatcher(matcherCNPJ,keyType);
             return;
 
         case RANDOM_KEY:
+
             Boolean matcherRandomKey = matcherPattern("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", keyValue);
-            this.checkMatcher(matcherRandomKey);
+            this.checkMatcher(matcherRandomKey,keyType);
             return;
 
         case PHONE:
+
             Boolean matcherPhone = matcherPattern("^((?:\\+?55)?)([1-9][0-9])(9[0-9]{8})$", keyValue);
-            this.checkMatcher(matcherPhone);
+            this.checkMatcher(matcherPhone,keyType);
             return;
 
         case EMAIL:
+
             Boolean matcherEmail = matcherPattern("^[a-z0-9+_.-]+@[a-z0-9.-]+$", keyValue);
-            this.checkMatcher(matcherEmail);
+            this.checkMatcher(matcherEmail,keyType);
             return;
 
         default:
@@ -92,9 +98,9 @@ public class ValidationKeyTypePix {
         return matcher.matches();
     }
 
-    private void checkMatcher(Boolean matcherCPF){
-        if(!matcherCPF){
-            throw new Exception("Invalid KeyType");
+    private void checkMatcher(Boolean matcher, TypesPix type){
+        if(!matcher){
+            throw new Exception("Invalid KeyValue: " + type);
         }
     };
 
