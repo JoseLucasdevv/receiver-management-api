@@ -2,7 +2,9 @@ package com.TaskDeveloper.UseCases.ReceiverUseCase;
 
 import com.TaskDeveloper.Dtos.ReceiverDTO;
 import com.TaskDeveloper.Entity.Receiver;
+import com.TaskDeveloper.TypesPix.TypesPix;
 import com.TaskDeveloper.TypesStatus.TypeStatus;
+import com.fasterxml.jackson.databind.util.TypeKey;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,6 +60,18 @@ public class ReceiverController {
         return new ResponseEntity<>(this._getReceiverUseCase.getAllReceiverByStatus(pageNumber,status), HttpStatus.OK);
     }
 
+    @GetMapping("keytype/{typePix}/{pageNumber}")
+    @ResponseBody
+    public ResponseEntity<List<Receiver>> getAllReceiversByTypePix(@PathVariable int pageNumber, @PathVariable TypesPix typePix){
+
+        return new ResponseEntity<>(this._getReceiverUseCase.getAllReceiverByKeyType(pageNumber,typePix), HttpStatus.OK);
+    }
+
+    @GetMapping("keyvalue/{keyValue}")
+    @ResponseBody
+    public ResponseEntity<Receiver> getReceiverByKeyValue(@PathVariable String keyValue){
+        return new ResponseEntity<>(this._getReceiverUseCase.getReceiverByKeyValue(keyValue), HttpStatus.OK);
+    }
 
     @PutMapping("{id}")
     @ResponseBody
