@@ -20,17 +20,18 @@ public class Receiver {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "receiver_id")
     private Long receiverId;
+
     @Length(min = 3)
     @NotEmpty(message = "Cannot be empty")
     @NotNull(message = "Cannot be nullish")
     @Column
     private String name;
-    @CPF(message = "should be cpf")
+
     @NotEmpty(message = "Cannot be empty")
     @NotNull(message = "Cannot be nullish")
-
     @Column
-    private String cpf;
+    private String cpfOrCnpj;
+
     @Email(message = "should be Email")
     @NotEmpty(message = "Cannot be empty")
     @NotNull(message = "Cannot be nullish")
@@ -46,10 +47,10 @@ public class Receiver {
     @JoinColumn(name ="fk_receiver_id",referencedColumnName = "receiver_id")
     private List<Pix> pix;
 
-    public Receiver(String name, Long receiverId, String cpf, String email, List<Pix> pix,TypeStatus status) {
+    public Receiver(String name, Long receiverId, String cpfOrCnpj, String email, List<Pix> pix,TypeStatus status) {
         this.name = name;
         this.receiverId = receiverId;
-        this.cpf = cpf;
+        this.cpfOrCnpj = cpfOrCnpj;
         this.email = email;
         this.pix = pix;
     }
@@ -66,7 +67,7 @@ public class Receiver {
         this.pix = pix;
     }
 
-    public void setReceiver(Long receiver_id) {
+    public void setReceiverId(Long receiver_id) {
         this.receiverId = receiver_id;
     }
 
@@ -82,11 +83,13 @@ public class Receiver {
         return name;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCpfOrCnpj(String cpfOrCnpj){
+        this.cpfOrCnpj = cpfOrCnpj;
     }
 
-    public String getCpf() {return cpf;}
+    public String getCpfOrCnpj(){
+        return this.cpfOrCnpj;
+    }
 
     public void setEmail(String email) {
         this.email = email;

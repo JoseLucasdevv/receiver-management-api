@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 public class ReceiverMapper {
 
     public ReceiverDTO entityToDTO(Receiver receiver){
-        return new ReceiverDTO(receiver.getReceiverId(),receiver.getName(),receiver.getCpf(),receiver.getEmail(),receiver.getPix(),receiver.getStatus());
+        return new ReceiverDTO(receiver.getReceiverId(),receiver.getName(),receiver.getCpfOrCnpj(),receiver.getEmail(),receiver.getPix(),receiver.getStatus());
     }
 
     public Receiver dtoToEntity(ReceiverDTO receiverdto){
         Receiver receiver = new Receiver();
-        receiver.setCpf(receiverdto.cpf());
+        receiver.setCpfOrCnpj(receiverdto.cpfOrCnpj());
         receiver.setName(receiverdto.name());
         receiver.setEmail(receiverdto.email());
         receiver.setPix(receiverdto.pix());
@@ -28,7 +28,7 @@ public class ReceiverMapper {
 
         return receiverdto.stream().map(dto -> {
             Receiver receiver = new Receiver();
-            receiver.setCpf(dto.cpf());
+            receiver.setCpfOrCnpj(dto.cpfOrCnpj());
             receiver.setName(dto.name());
             receiver.setEmail(dto.email());
             receiver.setPix(dto.pix());
