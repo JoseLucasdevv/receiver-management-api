@@ -76,7 +76,13 @@ public class ReceiverController {
     @PutMapping("{id}")
     @ResponseBody
     public ResponseEntity<String> updateReceiver(@PathVariable long id, @Valid @RequestBody ReceiverDTO receiverdto){
+
+        try{
         return new ResponseEntity<>(this._updateReceiverUseCase.updateReceiver(id,receiverdto),HttpStatus.ACCEPTED);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+        }
     }
     @DeleteMapping("{id}")
     @ResponseBody
